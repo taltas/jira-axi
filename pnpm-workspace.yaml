@@ -1,0 +1,6 @@
+packages:
+  - .
+  - bench-jira
+
+allowBuilds:
+  esbuild: true

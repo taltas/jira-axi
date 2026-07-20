@@ -1,0 +1,33 @@
+# Benchmark conditions: the agent model and task prompts remain identical.
+
+conditions:
+  jira-cli:
+    name: "jira CLI (raw)"
+    tool: jira
+    agents_md: |
+      # Jira tools
+
+      Use the installed `jira` CLI for every Jira operation. Do not use
+      `jira-axi`, curl, or direct HTTP requests. The CLI is already configured
+      in ~/.config/.jira/.config.yml; do not initialize or reconfigure it.
+
+      Discover exact syntax with `jira <command> --help` when needed. Relevant
+      commands include `jira issue list`, `jira issue view`,
+      `jira issue create`, `jira issue comment`, `jira project list`, and
+      `jira board list`. Use `--plain` where it makes output easier to inspect.
+
+  jira-axi:
+    name: "jira-axi (AXI wrapper)"
+    tool: jira-axi
+    agents_md: |
+      # Jira tools
+
+      Use the installed `jira-axi` command for every Jira operation. Do not use
+      the raw `jira` CLI, curl, or direct HTTP requests. Credentials are already
+      available in the environment; do not run setup or change configuration.
+
+      Relevant commands include `jira-axi issue list`, `jira-axi issue view`,
+      `jira-axi issue create`, `jira-axi issue comment`, `jira-axi search`,
+      `jira-axi project list`, and `jira-axi project view`. Output is TOON and
+      includes contextual next commands. Run `jira-axi <command> --help` when
+      exact flags are unclear.
