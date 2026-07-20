@@ -1,0 +1,83 @@
+# {{project_key}} is replaced after authenticated project discovery.
+# All tasks except create_issue_and_confirm are read-only.
+
+tasks:
+  newest_open_issue:
+    category: single_step
+    prompt: >
+      List open issues in Jira project {{project_key}} and report the key and
+      title of the newest one. Do not modify anything.
+    grading:
+      grading_hint: "Verify from the command output that the answer identifies the newest open issue in project {{project_key}} with both its key and title. A title invented without a successful Jira command fails."
+
+  view_recent_issue:
+    category: single_step
+    prompt: >
+      Find the most recently updated issue in Jira project {{project_key}}, view
+      that issue, and report its key, status, and assignee. Do not modify it.
+    grading:
+      grading_hint: "The trajectory must identify and view the most recently updated {{project_key}} issue, then report its key, status, and assignee (including explicitly unassigned)."
+
+  recent_project_issues:
+    category: single_step
+    prompt: >
+      List the 5 most recently created issues in Jira project {{project_key}}.
+      Report each issue's key and title in newest-first order.
+    grading:
+      grading_hint: "Verify the agent used Jira data and reported up to five {{project_key}} issue keys and titles in descending creation order. Fewer than five is acceptable only if the project contains fewer than five issues."
+
+  open_issue_count_jql:
+    category: single_step
+    prompt: >
+      Search Jira with JQL for issues in project {{project_key}} whose status
+      category is not Done. Report the result count, whether Jira labels it
+      exact or approximate, and the JQL used.
+    grading:
+      grading_hint: "The JQL must constrain project = {{project_key}} and statusCategory != Done. The reported count must come from the successful search result, not a displayed page size or a guess, and the answer must preserve any exact/approximate qualifier from the tool."
+
+  find_project:
+    category: single_step
+    prompt: >
+      List visible Jira projects, find project {{project_key}}, and report its
+      key and name. Do not modify anything.
+    grading:
+      grading_hint: "The answer must be based on a successful project-list command and include project {{project_key}} with its name."
+
+  newest_bug_last_commenter:
+    category: multi_step
+    prompt: >
+      Find the most recently created open Bug in Jira project {{project_key}},
+      view it and its comments, then report the issue key and who commented
+      last. If it has no comments, explicitly report that. Do not modify it.
+    grading:
+      grading_hint: "The agent must select the most recently created open Bug in {{project_key}}, inspect that exact issue's comments, and report the last commenter or no comments. It must not substitute an older bug merely because it has comments."
+
+  oldest_assigned_to_me:
+    category: multi_step
+    prompt: >
+      List unresolved issues in Jira project {{project_key}} assigned to the
+      current user, identify the oldest by creation date, view it, and report
+      its key, title, and status. If none exist, say so.
+    grading:
+      grading_hint: "The search must constrain project {{project_key}}, current-user assignee, and unresolved issues and order by creation date ascending. The answer must report the oldest match's key, title, and status, or correctly report an empty result."
+
+  newest_open_issue_comments:
+    category: multi_step
+    prompt: >
+      Find the newest open issue in Jira project {{project_key}}, view its full
+      details, and summarize how many comments it has and the latest comment's
+      author and text. If it has no comments, say so. Do not modify it.
+    grading:
+      grading_hint: "The agent must inspect the newest open {{project_key}} issue and accurately report its comment count plus latest-comment author/text, or explicitly report no comments."
+
+  create_issue_and_confirm:
+    category: multi_step
+    mutates: true
+    prompt: >
+      This is a sandbox mutation task. Create a Task in Jira project
+      {{project_key}} with summary "jira-axi benchmark verification" and
+      description "Created by the jira CLI benchmark harness." Then view the
+      created issue and report its key, summary, and status. Do not create more
+      than one issue.
+    grading:
+      grading_hint: "The trajectory must show exactly one successful Task creation in {{project_key}}, capture the returned key, view that same key, and confirm summary 'jira-axi benchmark verification' plus its status."

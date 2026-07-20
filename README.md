@@ -13,7 +13,14 @@ It provides token-efficient TOON output, compact schemas, contextual next steps,
 
 ## Benchmarks
 
-Benchmark pending. No performance or task-success results are claimed yet.
+[`bench-jira/`](./bench-jira) compares agent performance using the raw
+[`jira`](https://github.com/ankitpokhrel/jira-cli) CLI and `jira-axi`. The
+harness measures input tokens, a documented cost proxy, duration, turns, command
+count, and task success across realistic Jira workflows.
+
+Published results are currently [pending](./bench-jira/published-results/report.md)
+because Jira credentials were unavailable in the validation environment. No
+performance or task-success results are claimed yet.
 
 ## Quick Start
 
