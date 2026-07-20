@@ -11,16 +11,30 @@ Jira Cloud CLI for agents, designed with [AXI](https://github.com/kunchenguid/ax
 
 It provides token-efficient TOON output, compact schemas, contextual next steps, and structured errors over the Jira Cloud REST API.
 
+
 ## Benchmarks
 
 [`bench-jira/`](./bench-jira) compares agent performance using the raw
 [`jira`](https://github.com/ankitpokhrel/jira-cli) CLI and `jira-axi`. The
-harness measures input tokens, a documented cost proxy, duration, turns, command
-count, and task success across realistic Jira workflows.
+harness runs an OpenCode agent against a real Jira Cloud sandbox and measures
+input tokens, a documented cost proxy, duration, turns, command count, and task
+success across realistic Jira workflows (up to 3 repeats per condition/task,
+LLM-graded). Full per-task detail is in
+[`bench-jira/published-results/report.md`](./bench-jira/published-results/report.md).
 
-Published results are currently [pending](./bench-jira/published-results/report.md)
-because Jira credentials were unavailable in the validation environment. No
-performance or task-success results are claimed yet.
+**Live results (project `KAN`, 24 runs per condition):**
+
+| Condition | Avg Input Tokens | Avg Cost Proxy | Avg Duration | Avg Turns | Success% |
+|-----------|------------------|----------------|--------------|-----------|----------|
+| jira-cli  | 94,127           | $0.0726        | 78.6s        | 9.5       | 63%      |
+| jira-axi  | 30,321           | $0.0237        | 23.6s        | 4.3       | 100%     |
+
+`jira-axi` completed every task while the raw CLI failed on roughly a third of
+them, and used **3.1x fewer input tokens** at **3.1x lower cost** in **3.3x less
+time** on average. The widest gaps appear on the hardest tasks:
+`newest_bug_last_commenter` (151k vs 55k tokens) and `open_issue_count_jql`
+(113k vs 20k).
+
 
 ## Quick Start
 
