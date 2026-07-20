@@ -31,7 +31,13 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - run: pnpm run build
         if: ${{ steps.release.outputs.release_created }}
-      - run: npm publish --access public --provenance
+      - name: Publish to npm
         if: ${{ steps.release.outputs.release_created }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::warning::NPM_TOKEN secret is not set; skipping npm publish. Set it in repo Settings -> Secrets to enable publishing."
+            exit 0
+          fi
+          npm publish --access public --provenance
