@@ -1,7 +1,7 @@
 {
   "name": "jira-axi",
   "version": "0.1.0",
-  "packageManager": "pnpm@11.1.1",
+  "packageManager": "pnpm@9.15.4",
   "description": "AXI-compliant Jira Cloud CLI with token-efficient TOON output",
   "type": "module",
   "repository": {
